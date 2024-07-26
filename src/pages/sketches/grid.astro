@@ -1,0 +1,38 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="grid">
+  <div class="bg-black">
+    <div class="grid__container">
+      <div class="grid__container__canvas">
+        <canvas id="grid-canvas"></canvas>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+import { start } from "../../sketches/grid/grid";
+
+start();
+</script>
+
+<style>
+  .grid__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .grid__container__canvas {
+    width: 512px;
+    height: 640px;
+  }
+
+  #grid-canvas {
+    width: 100%;
+    height: 100%;
+  }
+</style>

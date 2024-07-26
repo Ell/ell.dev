@@ -1,0 +1,13 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="grass">
+  <div id="canvas" class="bg-black w-full h-full"></div>
+</Layout>
+
+<script>
+  import { run } from "../../sketches/grass/grass";
+
+  run();
+</script>
