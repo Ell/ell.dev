@@ -1,4 +1,9 @@
 /// <reference types="astro/client" />
+
+type Env = {
+  RETROAPI_HOST: string;
+};
+
 type Runtime = import('@astrojs/cloudflare').Runtime<Env>;
 
 declare namespace App {
