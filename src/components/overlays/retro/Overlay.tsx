@@ -50,19 +50,28 @@ const Overlay: FunctionComponent<{ username: string }> = ({ username }) => {
   });
 
   const achievements = gameData?.data?.achievements ?? {};
+  const latestAchievement = Object.keys(achievements)
+    .map(id => achievements[parseInt(id, 10)])
+    .filter(achievement => achievement.dateEarned)
+    .sort((a, b) => Date.parse(b.dateEarned) - Date.parse(a.dateEarned))[0];
 
   return (
     <>
       <BackgroundVideo videoURL={video} />
-      <div className="w-full h-screen flex flex-col fixed z-50">
+      <div className="w-full h-screen flex flex-col fixed z-50 bg-[#222]/80">
+        {latestAchievement && (
+          <div className="w-full h-[256px] flex flex-row">
+            <LatestAchievement achievement={latestAchievement} />
+          </div>
+        )}
         <div className="w-full h-full flex flex-row justify-center content-center">
           <Grid achievements={achievements} />
         </div>
-        <div className="w-full h-full flex flex-row justify-center mt-24">
+        <div className="w-full h-full flex flex-row justify-center mt-20">
           <div className="flex flex-col">
             <h1 className="text-2xl uppercase font-mono text-center">[ gamezone ]</h1>
             <h1 className="text-xl uppercase font-mono text-center">[ ell.dev ]</h1>
-            <h1 className="text-xl uppercase font-mono text-center mt-2">[ {profileData?.data?.richPresenceMsg} ]</h1>
+            <h1 className="text uppercase font-mono text-center mt-2">{profileData?.data?.richPresenceMsg}</h1>
           </div>
         </div>
         <div className="w-full h-full flex flex-col justify-end">
@@ -82,12 +91,32 @@ const GameInfo: FunctionComponent<GameInfoProps> = ({ game }) => {
     <div className="justify-end w-full h-[128px] bg-[#222]">
       <div className="flex flex-row">
         <img src={`https://retroachievements.org/${game.imageTitle}`} title={game.title} className="w-[128px] h-[128px]" />
-        <div className="flex flex-col m-2">
+        <div className="flex flex-col m-4 overflow-ellipsis font-mono uppercase whitespace-nowrap overflow-hidden">
           <div className="text-white text">{game.title} ({game.released})</div>
           <div className="text-white text">{game.developer}</div>
           <div className="text-white text">{game.consoleName}</div>
           <div className="text-white text">{game.numAwardedToUser} / {Object.keys(game.achievements).length}</div>
         </div>
+      </div>
+    </div>
+  )
+};
+
+type LatestAchievementProps = {
+  achievement: GameExtendedAchievementEntityWithUserProgress,
+};
+
+const LatestAchievement: FunctionComponent<LatestAchievementProps> = ({ achievement }) => {
+  return (
+    <div className="w-full h-full flex flex-row bg-[#222]">
+      <img src={`https://retroachievements.org/Badge/${achievement.badgeName}.png`} title={achievement.title} className="w-[128px] h-[128px]" />
+      <div className="flex flex-col w-full h-full font-mono uppercase m-4">
+        <h1 className="text-3xl">{achievement.title}</h1>
+        <h1 className="text">{achievement.description}</h1>
+        <h1 className="text">{achievement.dateEarned}</h1>
+      </div>
+      <div className="m-4">
+        <h1>{achievement.points}</h1>
       </div>
     </div>
   )
@@ -119,7 +148,7 @@ const Grid: FunctionComponent<GridProps> = ({ achievements }) => {
   });
 
   return (
-    <div className={`w-full bg-opacity-50 flex flex-row flex-wrap content-start bg-[#222]`}>
+    <div className={`w-full flex flex-row flex-wrap content-start`}>
       {gridEntries}
     </div>
   )
