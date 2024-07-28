@@ -8,10 +8,16 @@ export const GET: APIRoute = async ({ params, locals }) => {
   }
 
   const retroAuth = buildAuthorization({ username: 'ellg', webApiKey: locals.runtime.env.RETRO_API_KEY });
-  const profile = await getUserProfile(retroAuth, { username });
+  try {
+    const profile = await getUserProfile(retroAuth, { username });
 
-  return new Response(JSON.stringify(profile), {
-    status: 200,
-    headers: { 'Content-Type': 'application/json' },
-  });
+    return new Response(JSON.stringify(profile), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    console.error(error);
+
+    return new Response('Failed to fetch profile', { status: 500 });
+  }
 };
