@@ -1,7 +1,7 @@
 /// <reference types="astro/client" />
 
 type Env = {
-  RETROAPI_HOST: string;
+  RETRO_API_KEY: string;
 };
 
 type Runtime = import('@astrojs/cloudflare').Runtime<Env>;

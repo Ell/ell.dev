@@ -1,0 +1,15 @@
+---
+import { OverlayApp } from "../../../components/overlays/retro/Overlay";
+import Layout from "../../../layouts/Layout.astro";
+
+const { username } = Astro.params;
+---
+
+<Layout title="RetroAchievements Achievement Grid" bgColor="bg-[#111]">
+  <div class="w-full h-full overflow-hidden">
+    {username && (
+      <OverlayApp username={username} client:load />
+    )}
+  </div>
+</Layout>
+
