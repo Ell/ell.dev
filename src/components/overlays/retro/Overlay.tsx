@@ -46,7 +46,8 @@ const Overlay: FunctionComponent<{ username: string }> = ({ username }) => {
   const gameData = useQuery({
     queryKey: ["game", gameId],
     queryFn: () => getAchievements(username, gameId!),
-    enabled: !!gameId,
+    refetchInterval: 5000,
+    refetchIntervalInBackground: true,
   });
 
   const achievements = gameData?.data?.achievements ?? {};
