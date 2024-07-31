@@ -93,8 +93,8 @@ const GameInfo: FunctionComponent<GameInfoProps> = ({ game }) => {
       <div className="flex flex-row">
         <img src={`https://retroachievements.org/${game.imageTitle}`} title={game.title} className="w-[128px] h-[128px]" />
         <div className="flex flex-col m-4 overflow-ellipsis font-mono uppercase whitespace-nowrap overflow-hidden">
-          <div className="text-white text">{game.title} ({game.released})</div>
-          <div className="text-white text">{game.developer}</div>
+          <div className="text-white text">{game.title}</div>
+          <div className="text-white text">{game.developer}, {game.released}</div>
           <div className="text-white text">{game.consoleName}</div>
           <div className="text-white text">{game.numAwardedToUser} / {Object.keys(game.achievements).length}</div>
         </div>
@@ -110,9 +110,9 @@ type LatestAchievementProps = {
 const LatestAchievement: FunctionComponent<LatestAchievementProps> = ({ achievement }) => {
   return (
     <div className="w-full h-full flex flex-row bg-[#222]">
-      <img src={`https://retroachievements.org/Badge/${achievement.badgeName}.png`} title={achievement.title} className="w-[128px] h-[128px]" />
-      <div className="flex flex-col w-full h-full font-mono uppercase m-4">
-        <h1 className="text-3xl">{achievement.title}</h1>
+      <img src={`https://retroachievements.org/Badge/${achievement.badgeName}.png`} title={achievement.title} className="w-[160px] h-[160px]" />
+      <div className="flex flex-col w-full h-full font-mono uppercase m-2">
+        <h1 className="text-xl">{achievement.title}</h1>
         <h1 className="text">{achievement.description}</h1>
         <h1 className="text">{achievement.dateEarned}</h1>
       </div>
